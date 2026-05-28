@@ -1,1 +1,21 @@
-const mongoose = require('mongoose');\n\nconst districtSchema = new mongoose.Schema({\n  name: {\n    type: String,\n    required: true,\n    unique: true\n  },\n  namebengali: {\n    type: String,\n    required: true\n  },\n  state: String,\n  description: String,\n  createdAt: {\n    type: Date,\n    default: Date.now\n  }\n});\n\nmodule.exports = mongoose.model('District', districtSchema);\n
+const mongoose = require('mongoose');
+
+const districtSchema = new mongoose.Schema({
+  name: {
+    type: String,
+    required: true,
+    unique: true
+  },
+  namebengali: {
+    type: String,
+    required: true
+  },
+  state: String,
+  description: String,
+  createdAt: {
+    type: Date,
+    default: Date.now
+  }
+});
+
+module.exports = mongoose.model('District', districtSchema);

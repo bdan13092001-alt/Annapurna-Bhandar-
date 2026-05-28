@@ -1,0 +1,27 @@
+{
+  "name": "annapurna-bhandar-backend",
+  "version": "1.0.0",
+  "description": "Backend API for Annapurna Bhandar Portal",
+  "main": "server.js",
+  "scripts": {
+    "dev": "nodemon server.js",
+    "start": "node server.js",
+    "build": "echo \"No build needed\""
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "mongoose": "^7.0.0",
+    "dotenv": "^16.0.3",
+    "jsonwebtoken": "^9.0.0",
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
+    "joi": "^17.9.1",
+    "axios": "^1.3.4"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.20"
+  },
+  "keywords": ["government", "beneficiary", "portal"],
+  "author": "Annapurna Team",
+  "license": "GPL-3.0"
+}

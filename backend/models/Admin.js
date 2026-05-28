@@ -1,1 +1,56 @@
-const mongoose = require('mongoose');\nconst bcrypt = require('bcryptjs');\n\nconst adminSchema = new mongoose.Schema({\n  email: {\n    type: String,\n    required: true,\n    unique: true,\n    lowercase: true\n  },\n  password: {\n    type: String,\n    required: true\n  },\n  fullName: String,\n  role: {\n    type: String,\n    enum: ['Admin', 'Officer', 'Reviewer'],\n    default: 'Officer'\n  },\n  district: {\n    type: mongoose.Schema.Types.ObjectId,\n    ref: 'District'\n  },\n  isActive: {\n    type: Boolean,\n    default: true\n  },\n  createdAt: {\n    type: Date,\n    default: Date.now\n  },\n  updatedAt: {\n    type: Date,\n    default: Date.now\n  }\n});\n\n// Hash password before saving\nadminSchema.pre('save', async function(next) {\n  if (!this.isModified('password')) return next();\n  try {\n    const salt = await bcrypt.genSalt(10);\n    this.password = await bcrypt.hash(this.password, salt);\n    next();\n  } catch (error) {\n    next(error);\n  }\n});\n\n// Compare password method\nadminSchema.methods.comparePassword = async function(inputPassword) {\n  return await bcrypt.compare(inputPassword, this.password);\n};\n\nmodule.exports = mongoose.model('Admin', adminSchema);\n
+const mongoose = require('mongoose');
+const bcrypt = require('bcryptjs');
+
+const adminSchema = new mongoose.Schema({
+  email: {
+    type: String,
+    required: true,
+    unique: true,
+    lowercase: true
+  },
+  password: {
+    type: String,
+    required: true
+  },
+  fullName: String,
+  role: {
+    type: String,
+    enum: ['Admin', 'Officer', 'Reviewer'],
+    default: 'Officer'
+  },
+  district: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'District'
+  },
+  isActive: {
+    type: Boolean,
+    default: true
+  },
+  createdAt: {
+    type: Date,
+    default: Date.now
+  },
+  updatedAt: {
+    type: Date,
+    default: Date.now
+  }
+});
+
+// Hash password before saving
+adminSchema.pre('save', async function(next) {
+  if (!this.isModified('password')) return next();
+  try {
+    const salt = await bcrypt.genSalt(10);
+    this.password = await bcrypt.hash(this.password, salt);
+    next();
+  } catch (error) {
+    next(error);
+  }
+});
+
+// Compare password method
+adminSchema.methods.comparePassword = async function(inputPassword) {
+  return await bcrypt.compare(inputPassword, this.password);
+};
+
+module.exports = mongoose.model('Admin', adminSchema);
